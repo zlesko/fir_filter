@@ -66,7 +66,7 @@ double firf_base::Error_Imp_Resp(double total_taps_max, double error_max)
 	// ((error_from_imp_resp + 2e)n^2 + 7en + 2e < _error_max
 	// n = buffer_size, e = machine_epsilon, error = for imp_resp
 	double a = (4.0 * DBL_EPSILON * total_taps_max) + (2.0 * DBL_EPSILON);
-	double error_imp_resp = (error_max - a) / total_taps_max;
+	double error_imp_resp = error_max - a;
 
 	return error_imp_resp;
 }

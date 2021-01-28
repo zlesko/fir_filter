@@ -35,7 +35,10 @@ std::vector<double> imp_resp_lp::Get_Causal_Imp_Resp(
 	// Req: Valid_Imp_Resp()
 	std::vector<double> sinc(_sinc.Get_Causal_Sinc_Rev(freq_cutoff,
 		_resp_samples_max));
-	for (auto& samples : sinc) { samples *= atten_frac; }
+	for (long sample = 1; sample < sinc.size(); sample++)
+	{
+		sinc.at(sample) *= atten_frac;
+	}
 	std::vector<double> win(_win.Get_Causal_Window(sinc.size()));
 	std::vector<double> imp_resp(sinc.size(), 0.0);
 	for (long sample = 0; sample < imp_resp.size(); sample++)

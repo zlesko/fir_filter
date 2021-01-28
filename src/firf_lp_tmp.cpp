@@ -72,8 +72,9 @@ std::vector<double> firf_lp_tmp::Filter(std::vector<double> const& signal)
 	Normalize_Abs_Kahan(imp_resp);
 	ring_buffer buffer(_total_taps_max, _causal_taps_max);
 	long sample = 0;
-	long load_samples = static_cast<long>(imp_resp.size())
-			- static_cast<long>(imp_resp_causal.size());
+	long load_samples = (_total_taps_max - _causal_taps_max)
+		- (static_cast<long>(imp_resp.size())
+		- static_cast<long>(imp_resp_causal.size()));
 	while (sample < load_samples && sample < signal.size()
 		&& sample < filt_sig.size())
 	{

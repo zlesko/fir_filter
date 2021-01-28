@@ -36,11 +36,14 @@ std::vector<double> imp_resp_be::Get_Causal_Imp_Resp(double freq_center,
 	// Req: Valid_Imp_Resp()
 	std::vector<double> sinc(_sinc.Get_Causal_Sinc_Rev(freq_bw / 2.0,
 		_resp_samples_max));
-	for (auto& sample : sinc) { sample *= atten_frac; }
 	std::vector<double> win(_win.Get_Causal_Window(sinc.size()));
 	std::vector<double> fshift(_cos.Get_Causal_Cos(freq_center, sinc.size()));
 	Negate(sinc);
 	sinc.at(0) += Impulse(freq_bw);
+	for (long sample = 1; sample < sinc.size(); sample++)
+	{
+		sinc.at(sample) *= atten_frac;
+	}
 	std::vector<double> imp_resp(sinc.size(), 0.0);
 	for (long sample = 0; sample < imp_resp.size(); sample++)
 	{
